@@ -3,7 +3,7 @@
 
 ### :books: :mortar_board:
 Um pouco sobre mim...
-- :office: Atualmente trabalho como auxilidar administrativo em uma torrefação de café :coffee:
+- :office: Atualmente trabalho como auxiliar administrativo em uma torrefação de café :coffee:
 - Estou em busca do meu primeiro emprego na área de desenvolvimento
 <br>
 
