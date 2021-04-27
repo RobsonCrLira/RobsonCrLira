@@ -10,7 +10,7 @@ Um pouco sobre mim...
 [![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=RobsonCrLira&count_private=true&theme=dark&show_icons=true)](https://github.com/anuraghazra/github-readme-stats)
 <br>
 
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RobsonCrLira&layout=compact&theme=dark&hide_border=true&cache_seconds=2000" title="Linguagens mais utilizadas" alt="Linguagens mais utilizadas" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RobsonCrLira&layout=compact&&langs_count=10theme=dark&hide_border=true&cache_seconds=2000" title="Linguagens mais utilizadas" alt="Linguagens mais utilizadas" />
 <br>
 
 <p align="left">
