@@ -10,7 +10,7 @@ Um pouco sobre mim...
 - Estou em busca do meu primeiro emprego na área de desenvolvimento
   <br>
 
-[![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=RobsonCrLira&count_private=false&theme=dark&show_icons=true&include_all_commits=true)](https://github.com/anuraghazra/github-readme-stats)
+[![Anurag's github stats](https://github-readme-stats.vercel.app/api?username=RobsonCrLira&theme=dark&show_icons=true&include_all_commits=true)](https://github.com/anuraghazra/github-readme-stats)
 <br>
 
 <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=RobsonCrLira&layout=compact&langs_count=10&theme=dark&hide_border=true&&hide=jupyter+notebook" title="Linguagens mais utilizadas" alt="Linguagens mais utilizadas" />
