@@ -19,7 +19,6 @@ Construo APIs e sistemas robustos e cuido do ciclo completo até produção — 
 - CQRS, Event Sourcing e Saga
 - Infraestrutura como código & automação de deploys
 - Design de sistemas distribuídos e escaláveis
-- Clean Architecture e Hexagonal Architecture em bases de grande porte (+180k linhas)
 
 ### 📜 Certificações
 
