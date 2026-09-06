@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Robson Lira — Backend &amp; DevOps Engineer. Node.js, AWS, infraestrutura como código.">
+<title>Robson Lira</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F4F6; --surface:#FFFFFF; --line:#D6DCE2; --text:#14202A; --muted:#5B6B79;
+  --accent:#B4770E; --accent-soft:#F7E8C8; --ok:#1E8A80; --code-bg:#1A232C; --code-text:#E6EBEF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1419; --surface:#161F27; --line:#27323C; --text:#E6EBEF; --muted:#8A98A6;
+    --accent:#F2B441; --accent-soft:#2C2413; --ok:#4FB8AD; --code-bg:#0A0F13; --code-text:#E6EBEF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1419; --surface:#161F27; --line:#27323C; --text:#E6EBEF; --muted:#8A98A6;
+  --accent:#F2B441; --accent-soft:#2C2413; --ok:#4FB8AD; --code-bg:#0A0F13; --code-text:#E6EBEF;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;text-wrap:balance;margin:0}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* nav */
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+nav .brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:18px;color:var(--text)}
+nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+nav li a{color:var(--muted);font-size:14px}
+nav li a:hover{color:var(--text);text-decoration:none}
+
+/* hero */
+.hero{padding:72px 0 56px;display:grid;gap:28px}
+.hero h1{font-size:clamp(40px,7vw,68px);font-weight:700;line-height:1.02;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p.lead{font-size:20px;max-width:40ch;color:var(--muted);margin:0}
+.pipeline{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--code-bg);color:var(--code-text);border-radius:6px;padding:14px 18px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.pipeline .stage{display:flex;align-items:center;gap:8px}
+.pipeline .dot{width:9px;height:9px;border-radius:50%;background:#3B4854;flex:none}
+.pipeline .stage.done .dot{background:var(--ok)}
+.pipeline .stage.run .dot{background:var(--accent);animation:pulse 1.2s infinite}
+.pipeline .arrow{color:#3B4854}
+.pipeline .env{margin-left:auto;color:#8A98A6}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.pipeline .stage.run .dot{animation:none}}
+.cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{display:inline-block;padding:11px 18px;border-radius:4px;font-weight:500;font-size:15px;background:var(--accent);color:#14202A}
+.btn:hover{text-decoration:none;filter:brightness(1.06)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+
+/* sections */
+section{padding:56px 0;border-top:1px solid var(--line)}
+section h2{font-size:30px;font-weight:700;letter-spacing:-.01em;margin:8px 0 28px}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pillar{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px}
+.pillar h3{font-size:19px;font-weight:700;margin-bottom:8px}
+.pillar p{margin:0;color:var(--muted);font-size:15px}
+.pillar .tag{display:block;margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--accent)}
+@media (max-width:720px){.pillars{grid-template-columns:1fr}}
+
+/* stack */
+.stack{display:grid;grid-template-columns:150px 1fr;row-gap:14px;column-gap:20px}
+.stack dt{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:5px}
+.stack dd{margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:14px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.chip.hi{border-color:var(--accent);background:var(--accent-soft)}
+@media (max-width:560px){.stack{grid-template-columns:1fr;row-gap:6px}.stack dd{margin-bottom:12px}}
+
+/* log-style timeline */
+.log{border-left:2px solid var(--line);padding-left:26px;display:grid;gap:34px}
+.entry{position:relative}
+.entry::before{content:"";position:absolute;left:-33px;top:9px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--muted)}
+.entry.now::before{border-color:var(--accent);background:var(--accent)}
+.entry .ts{font-family:"JetBrains Mono",monospace;font-size:13px;color:var(--muted)}
+.entry h3{font-size:21px;font-weight:700;margin:4px 0 2px}
+.entry .org{color:var(--muted);font-size:15px}
+.entry ul{margin:12px 0 0;padding-left:18px;color:var(--text)}
+.entry li{margin-bottom:6px}
+.entry p{margin:8px 0 0;color:var(--muted)}
+
+/* cert */
+.cert{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px 22px}
+.cert .badge{font-family:"JetBrains Mono",monospace;font-size:12px;padding:6px 10px;border-radius:4px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent)}
+.cert .study{color:var(--muted);font-size:15px;margin-left:auto}
+
+/* contact */
+.contact{display:grid;gap:8px}
+.contact a{font-size:18px}
+footer{padding:36px 0;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav>
+  <span class="brand">Robson Lira</span>
+  <ul>
+    <li><a href="#faco">O que faço</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#exp">Experiência</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div>
+    <div class="eyebrow">Backend &amp; DevOps Engineer · Araraquara, SP · remoto</div>
+    <h1 style="margin-top:14px">Construo APIs em Node.js e levo até produção <em>na AWS</em>.</h1>
+  </div>
+  <p class="lead">Quase 5 anos escrevendo backend em TypeScript e cuidando do resto: infraestrutura como código, pipelines de deploy e o custo da conta no fim do mês.</p>
+  <div class="pipeline" aria-label="Pipeline de deploy">
+    <span class="stage done"><span class="dot"></span>commit</span><span class="arrow">→</span>
+    <span class="stage done"><span class="dot"></span>build</span><span class="arrow">→</span>
+    <span class="stage done"><span class="dot"></span>test</span><span class="arrow">→</span>
+    <span class="stage done"><span class="dot"></span>tofu apply</span><span class="arrow">→</span>
+    <span class="stage run"><span class="dot"></span>deploy</span>
+    <span class="env">env=prod · region=sa-east-1</span>
+  </div>
+  <div class="cta">
+    <a class="btn" href="mailto:robson.crlira@gmail.com">Fale comigo</a>
+    <a class="btn ghost" href="https://github.com/RobsonCrLira">GitHub</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/robson-crlira/">LinkedIn</a>
+  </div>
+</header>
+
+<section id="faco">
+  <div class="eyebrow">Frentes</div>
+  <h2>O que eu faço</h2>
+  <div class="pillars">
+    <div class="pillar">
+      <h3>APIs e microsserviços</h3>
+      <p>REST em Node.js/TypeScript com Express, Prisma e Sequelize. Clean/Hexagonal, CQRS e TDD quando o domínio pede — e não por moda.</p>
+      <span class="tag">node · typescript · postgres · redis</span>
+    </div>
+    <div class="pillar">
+      <h3>Serverless e eventos</h3>
+      <p>Lambda, API Gateway, SQS, S3 e DynamoDB. Filas e processamento assíncrono para desacoplar serviços e absorver picos sem estourar orçamento.</p>
+      <span class="tag">lambda · sqs · dynamodb · rds</span>
+    </div>
+    <div class="pillar">
+      <h3>Infra como código e CI/CD</h3>
+      <p>Ambientes reproduzíveis com OpenTofu/Terraform, CloudFormation e SAM. Pipelines em GitHub Actions, Jenkins e Bitbucket — nada de clique no console.</p>
+      <span class="tag">opentofu · cloudformation · github actions</span>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="eyebrow">Ferramentas</div>
+  <h2>Stack</h2>
+  <dl class="stack">
+    <dt>Backend</dt><dd><span class="chip hi">Node.js</span><span class="chip hi">TypeScript</span><span class="chip">Express</span><span class="chip">Prisma</span><span class="chip">Sequelize</span><span class="chip">Laravel/PHP</span><span class="chip">Python</span></dd>
+    <dt>AWS</dt><dd><span class="chip hi">Lambda</span><span class="chip">API Gateway</span><span class="chip">SQS</span><span class="chip">S3</span><span class="chip">DynamoDB</span><span class="chip">RDS</span><span class="chip">CloudFormation</span><span class="chip">SAM</span></dd>
+    <dt>DevOps / IaC</dt><dd><span class="chip hi">OpenTofu</span><span class="chip">Terraform</span><span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">Bitbucket Pipelines</span><span class="chip">Docker</span><span class="chip">Linux</span><span class="chip">Cloudflare</span></dd>
+    <dt>Dados</dt><dd><span class="chip hi">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">DynamoDB</span><span class="chip">Redis</span></dd>
+    <dt>Arquitetura</dt><dd><span class="chip">Clean</span><span class="chip">Hexagonal</span><span class="chip">CQRS</span><span class="chip">Event-Driven</span><span class="chip">DDD</span><span class="chip">TDD</span></dd>
+  </dl>
+</section>
+
+<section id="exp">
+  <div class="eyebrow">Histórico</div>
+  <h2>Experiência</h2>
+  <div class="log">
+    <div class="entry now">
+      <div class="ts">2021-12 → agora</div>
+      <h3>Backend &amp; DevOps Engineer</h3>
+      <div class="org">Wejam Digital · São Paulo (remoto)</div>
+      <ul>
+        <li>Desenvolvedor backend principal: APIs REST e microsserviços em Node.js/TypeScript para múltiplos produtos em produção.</li>
+        <li>Arquitetura serverless na AWS com filas e processamento assíncrono.</li>
+        <li>Infra como código (OpenTofu/Terraform, CloudFormation, SAM) e pipelines CI/CD por ambiente.</li>
+        <li>Otimização de custo e latência: dimensionamento de Lambdas, cache com Redis, índices e consultas no PostgreSQL.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="ts">2021-09 → 2021-12</div>
+      <h3>Desenvolvedor Backend (freelancer)</h3>
+      <div class="org">Sunize Digital</div>
+      <p>APIs em Node.js com PostgreSQL e Docker — primeiro projeto profissional em software.</p>
+    </div>
+    <div class="entry">
+      <div class="ts">2013 → 2021</div>
+      <h3>Antes do código</h3>
+      <div class="org">Administrativo, fiscal e departamento pessoal</div>
+      <p>Oito anos com processos, prazos e dados financeiros. É de lá que vem a mania de automatizar o que se repete.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cert">
+  <div class="eyebrow">Credenciais</div>
+  <h2>Certificação</h2>
+  <div class="cert">
+    <span class="badge">AWS</span>
+    <a href="https://www.credly.com/badges/37b9a504-c339-49b3-83fb-59b03462b9cc/public_url">AWS Certified Cloud Practitioner · 2023</a>
+    <span class="study">Estudando: Solutions Architect Associate</span>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="eyebrow">Contato</div>
+  <h2>Vamos conversar</h2>
+  <div class="contact">
+    <a href="mailto:robson.crlira@gmail.com">robson.crlira@gmail.com</a>
+    <a href="https://www.linkedin.com/in/robson-crlira/">linkedin.com/in/robson-crlira</a>
+    <a href="https://github.com/RobsonCrLira">github.com/RobsonCrLira</a>
+  </div>
+</section>
+
+<footer>Robson Cristian de Lira · Araraquara, SP · <span class="mono">sa-east-1</span></footer>
+</div>
+</body>
+</html>

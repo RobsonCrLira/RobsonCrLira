@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Robson Lira</title>
+<meta name="description" content="Robson Cristian de Lira — Backend &amp; DevOps Engineer. Node.js, TypeScript, AWS serverless e infraestrutura como código.">
+<meta property="og:title" content="Robson Lira — Backend &amp; DevOps Engineer">
+<meta property="og:description" content="APIs em Node.js levadas até produção na AWS: serverless, IaC e CI/CD.">
+<meta property="og:type" content="profile">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230B1015'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' fill='%23F2B441' text-anchor='middle'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<!--
+  ┌───────────────────────────────────────────────────────────────┐
+  │  Opa. Você abriu o inspetor. Boa — é o tipo de gente que eu   │
+  │  gosto de ter por perto.                                      │
+  │                                                               │
+  │  Abre a aba Console: deixei o resumo e os contatos lá.        │
+  │  E digita  hire()  se quiser pular direto pro e-mail.         │
+  │                                                               │
+  │  Sem framework, sem build, sem dependência. Só HTML, CSS e    │
+  │  um pouco de JS — do jeito que eu gosto de servir um backend. │
+  │                                    — Robson Cristian de Lira  │
+  └───────────────────────────────────────────────────────────────┘
+-->
+
+<style>
+:root{
+  --bg:#0B1015; --panel:#111A21; --panel-2:#0E161C; --line:#1E2B35;
+  --text:#DCE5EC; --muted:#7B8B99; --dim:#4E5F6C;
+  --accent:#F2B441; --teal:#4FB8AD; --violet:#9B8CF0; --rose:#E8757A;
+  --radius:6px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:16px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(circle at 15% -10%, rgba(242,180,65,.07), transparent 55%);
+}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.wrap{max-width:940px;margin:0 auto;padding:0 22px}
+h1,h2,h3{margin:0;text-wrap:balance}
+
+/* status bar */
+.statusbar{
+  border-bottom:1px solid var(--line);background:var(--panel-2);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);
+}
+.statusbar .wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding-top:9px;padding-bottom:9px}
+.statusbar b{color:var(--teal);font-weight:500}
+.statusbar .sep{color:var(--dim)}
+.live{display:inline-flex;align-items:center;gap:6px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--teal);display:inline-block;animation:blink 2.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+.statusbar .right{margin-left:auto;display:flex;gap:16px}
+.statusbar a{color:var(--muted)}
+.statusbar a:hover{color:var(--text);text-decoration:none}
+
+/* hero */
+header.hero{padding:64px 0 44px}
+.route{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);margin-bottom:18px}
+.route .m{color:var(--teal)}
+h1{font-size:clamp(34px,5.6vw,54px);line-height:1.08;font-weight:600;letter-spacing:-.02em}
+h1 span{color:var(--accent)}
+.lead{color:var(--muted);font-size:19px;max-width:46ch;margin:18px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--radius);font-size:15px;font-weight:500;border:1px solid transparent;cursor:pointer;font-family:inherit}
+.btn.primary{background:var(--accent);color:#0B1015}
+.btn.primary:hover{filter:brightness(1.08);text-decoration:none}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--text)}
+.btn.ghost:hover{border-color:var(--muted);text-decoration:none}
+
+/* terminal */
+.term{border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);overflow:hidden;margin-top:34px}
+.term-bar{display:flex;align-items:center;gap:8px;padding:9px 14px;background:var(--panel-2);border-bottom:1px solid var(--line);font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted)}
+.term-bar .dots{display:flex;gap:6px;margin-right:6px}
+.term-bar .dots i{width:10px;height:10px;border-radius:50%;display:block;background:var(--line)}
+.term-bar .hint{margin-left:auto;color:var(--dim)}
+.term-body{padding:16px;font-family:"IBM Plex Mono",monospace;font-size:13.5px;line-height:1.75;max-height:340px;overflow:auto}
+.term-body::-webkit-scrollbar{width:8px}
+.term-body::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.ln{white-space:pre-wrap;word-break:break-word;margin:0}
+.ps1{color:var(--teal)}
+.cmd{color:var(--text)}
+.out{color:var(--muted)}
+.key{color:var(--violet)}
+.str{color:var(--accent)}
+.num{color:var(--teal)}
+.err{color:var(--rose)}
+.term-input{display:flex;align-items:center;gap:8px;padding:10px 16px;border-top:1px solid var(--line);background:var(--panel-2)}
+.term-input span{color:var(--teal);font-family:"IBM Plex Mono",monospace;font-size:13.5px}
+.term-input input{flex:1;background:transparent;border:0;color:var(--text);font-family:"IBM Plex Mono",monospace;font-size:13.5px;padding:2px 0}
+.term-input input::placeholder{color:var(--dim)}
+
+/* sections */
+section{padding:52px 0;border-top:1px solid var(--line)}
+.sec-head{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--dim);margin-bottom:6px;letter-spacing:.06em}
+.sec-head b{color:var(--teal);font-weight:500}
+h2{font-size:27px;font-weight:600;letter-spacing:-.01em;margin-bottom:26px}
+
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media (max-width:760px){.grid3{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:18px;font-weight:600}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .tags{margin-top:auto;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--accent);letter-spacing:.02em}
+
+/* stack */
+dl.stack{display:grid;grid-template-columns:130px 1fr;gap:14px 20px;margin:0}
+dl.stack dt{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);padding-top:6px}
+dl.stack dd{margin:0;display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:4px;color:var(--muted)}
+.chip.hi{color:var(--accent);border-color:rgba(242,180,65,.4);background:rgba(242,180,65,.07)}
+@media (max-width:560px){dl.stack{grid-template-columns:1fr;gap:4px}dl.stack dd{margin-bottom:14px}}
+
+/* timeline as log */
+.log{display:grid;gap:30px;border-left:2px solid var(--line);padding-left:24px}
+.entry{position:relative}
+.entry::before{content:"";position:absolute;left:-31px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--dim)}
+.entry.now::before{border-color:var(--accent);background:var(--accent)}
+.entry .ts{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--dim)}
+.entry h3{font-size:20px;font-weight:600;margin:3px 0 2px}
+.entry .org{color:var(--muted);font-size:14.5px}
+.entry ul{margin:11px 0 0;padding-left:18px;color:var(--text);font-size:15.5px}
+.entry li{margin-bottom:5px}
+.entry li::marker{color:var(--dim)}
+.entry p{margin:8px 0 0;color:var(--muted);font-size:15.5px}
+
+/* cert */
+.cert{display:flex;flex-wrap:wrap;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px}
+.cert .badge{font-family:"IBM Plex Mono",monospace;font-size:11.5px;padding:5px 9px;border-radius:4px;color:var(--accent);border:1px solid rgba(242,180,65,.45);background:rgba(242,180,65,.08)}
+.cert .study{margin-left:auto;color:var(--muted);font-size:14.5px}
+@media (max-width:560px){.cert .study{margin-left:0}}
+
+/* contact */
+.contact{display:grid;gap:10px;font-family:"IBM Plex Mono",monospace;font-size:15px}
+.contact a{display:inline-flex;gap:10px}
+.contact .k{color:var(--dim);width:100px;display:inline-block}
+footer{padding:30px 0 46px;border-top:1px solid var(--line);color:var(--dim);font-family:"IBM Plex Mono",monospace;font-size:12px;display:flex;flex-wrap:wrap;gap:12px}
+footer .right{margin-left:auto}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);color:var(--text);padding:10px 16px;border-radius:var(--radius);font-family:"IBM Plex Mono",monospace;font-size:13px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="statusbar">
+  <div class="wrap">
+    <span class="live"><i></i> <b>200 OK</b></span>
+    <span class="sep">·</span><span>region <b>sa-east-1</b></span>
+    <span class="sep">·</span><span>uptime <b id="uptime">4a 9m</b></span>
+    <span class="right">
+      <a href="#stack">stack</a><a href="#exp">experiência</a><a href="#contato">contato</a>
+    </span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="route mono"><span class="m">GET</span> /robson-cristian-de-lira <span style="color:var(--dim)">— Backend &amp; DevOps Engineer · Araraquara, SP · remoto</span></div>
+  <h1>Escrevo o backend e sou eu também que <span>coloco em produção</span>.</h1>
+  <p class="lead">Quase 5 anos em Node.js e TypeScript, com o resto do caminho incluso: AWS serverless, infraestrutura como código e pipelines que fazem deploy sem ninguém acordado de madrugada.</p>
+  <div class="cta">
+    <a class="btn primary" href="mailto:robson.crlira@gmail.com">Fale comigo</a>
+    <button class="btn ghost" id="copyCurl" type="button">Copiar <span class="mono">curl</span></button>
+    <a class="btn ghost" href="https://github.com/RobsonCrLira">GitHub</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/robson-crlira/">LinkedIn</a>
+  </div>
+
+  <div class="term">
+    <div class="term-bar">
+      <span class="dots"><i></i><i></i><i></i></span>
+      robson@sa-east-1:~
+      <span class="hint">digite <b>help</b> · atalho <b>/</b></span>
+    </div>
+    <div class="term-body" id="out" aria-live="polite"></div>
+    <form class="term-input" id="form" autocomplete="off">
+      <span>$</span>
+      <label for="cmd" style="position:absolute;left:-9999px">comando</label>
+      <input id="cmd" placeholder="whoami" spellcheck="false">
+    </form>
+  </div>
+</header>
+
+<section id="faco">
+  <div class="sec-head mono"><b>GET</b> /capabilities</div>
+  <h2>O que eu faço</h2>
+  <div class="grid3">
+    <div class="card">
+      <h3>APIs e microsserviços</h3>
+      <p>REST em Node.js/TypeScript com Express, Prisma e Sequelize. Clean/Hexagonal, CQRS e TDD quando o domínio pede — não por moda.</p>
+      <span class="tags">node · typescript · postgres · redis</span>
+    </div>
+    <div class="card">
+      <h3>Serverless e eventos</h3>
+      <p>Lambda, API Gateway, SQS, S3 e DynamoDB. Filas e processamento assíncrono para desacoplar serviços e absorver picos sem estourar a fatura.</p>
+      <span class="tags">lambda · sqs · dynamodb · rds</span>
+    </div>
+    <div class="card">
+      <h3>Infra como código e CI/CD</h3>
+      <p>Ambientes reproduzíveis com OpenTofu/Terraform, CloudFormation e SAM. Pipelines em GitHub Actions, Jenkins e Bitbucket — sem clique no console.</p>
+      <span class="tags">opentofu · cloudformation · gh actions</span>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="sec-head mono"><b>GET</b> /stack</div>
+  <h2>Stack</h2>
+  <dl class="stack">
+    <dt>Backend</dt><dd><span class="chip hi">Node.js</span><span class="chip hi">TypeScript</span><span class="chip">Express</span><span class="chip">Prisma</span><span class="chip">Sequelize</span><span class="chip">Python</span></dd>
+    <dt>AWS</dt><dd><span class="chip hi">Lambda</span><span class="chip">API Gateway</span><span class="chip">SQS</span><span class="chip">S3</span><span class="chip">DynamoDB</span><span class="chip">RDS</span><span class="chip">CloudFormation</span><span class="chip">SAM</span></dd>
+    <dt>DevOps / IaC</dt><dd><span class="chip hi">OpenTofu</span><span class="chip">Terraform</span><span class="chip">GitHub Actions</span><span class="chip">Jenkins</span><span class="chip">Bitbucket Pipelines</span><span class="chip">Docker</span><span class="chip">Linux</span><span class="chip">Cloudflare</span></dd>
+    <dt>Dados</dt><dd><span class="chip hi">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">DynamoDB</span><span class="chip">Redis</span></dd>
+    <dt>Arquitetura</dt><dd><span class="chip">Clean</span><span class="chip">Hexagonal</span><span class="chip">CQRS</span><span class="chip">Event-Driven</span><span class="chip">DDD</span><span class="chip">TDD</span></dd>
+  </dl>
+</section>
+
+<section id="exp">
+  <div class="sec-head mono"><b>GET</b> /experiencia</div>
+  <h2>Experiência</h2>
+  <div class="log">
+    <div class="entry now">
+      <div class="ts mono">2021-12 → agora</div>
+      <h3>Backend &amp; DevOps Engineer</h3>
+      <div class="org">Wejam Digital · São Paulo (remoto)</div>
+      <ul>
+        <li>Desenvolvedor backend principal: APIs REST e microsserviços em Node.js/TypeScript para múltiplos produtos em produção.</li>
+        <li>Arquitetura serverless na AWS com filas e processamento assíncrono.</li>
+        <li>Infra como código (OpenTofu/Terraform, CloudFormation, SAM) e pipelines CI/CD por ambiente.</li>
+        <li>Otimização de custo e latência: dimensionamento de Lambdas, cache com Redis, índices e consultas no PostgreSQL.</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="ts mono">2021-09 → 2021-12</div>
+      <h3>Desenvolvedor Backend (freelancer)</h3>
+      <div class="org">Sunize Digital</div>
+      <p>APIs em Node.js com PostgreSQL e Docker — primeiro projeto profissional em software.</p>
+    </div>
+    <div class="entry">
+      <div class="ts mono">2013 → 2021</div>
+      <h3>Antes do código</h3>
+      <div class="org">Administrativo, fiscal e departamento pessoal</div>
+      <p>Oito anos com processos, prazos e dados financeiros. É de lá que vem a mania de automatizar o que se repete.</p>
+    </div>
+  </div>
+</section>
+
+<section id="cert">
+  <div class="sec-head mono"><b>GET</b> /credenciais</div>
+  <h2>Certificação e formação</h2>
+  <div class="cert">
+    <span class="badge mono">AWS</span>
+    <a href="https://www.credly.com/badges/37b9a504-c339-49b3-83fb-59b03462b9cc/public_url">Certified Cloud Practitioner · 2023</a>
+    <span class="study">Estudando: Solutions Architect Associate</span>
+  </div>
+  <p style="color:var(--muted);margin:16px 0 0;font-size:15px">
+    Engenharia de Computação — UNIARA (2013–2020, incompleto) · Técnico em Informática — ETEC Dr. Adail Nunes da Silva
+  </p>
+</section>
+
+<section id="contato">
+  <div class="sec-head mono"><b>POST</b> /contato</div>
+  <h2>Vamos conversar</h2>
+  <div class="contact">
+    <a href="mailto:robson.crlira@gmail.com"><span class="k">email</span> robson.crlira@gmail.com</a>
+    <a href="https://www.linkedin.com/in/robson-crlira/"><span class="k">linkedin</span> /in/robson-crlira</a>
+    <a href="https://github.com/RobsonCrLira"><span class="k">github</span> /RobsonCrLira</a>
+    <span><span class="k" style="color:var(--dim)">telefone</span> <span style="color:var(--muted)">(16) 99760-9698</span></span>
+  </div>
+</section>
+
+<footer>
+  <span>© <span id="year">2026</span> Robson Cristian de Lira</span>
+  <span class="right">servido estático · sem framework · sem cookie</span>
+</footer>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var LINKS = {
+    email: "robson.crlira@gmail.com",
+    linkedin: "https://www.linkedin.com/in/robson-crlira/",
+    github: "https://github.com/RobsonCrLira",
+    credly: "https://www.credly.com/badges/37b9a504-c339-49b3-83fb-59b03462b9cc/public_url"
+  };
+
+  var ME = {
+    nome: "Robson Cristian de Lira",
+    cargo: "Backend & DevOps Engineer",
+    local: "Araraquara, SP — remoto",
+    experiencia_anos: 5,
+    stack: ["Node.js", "TypeScript", "AWS", "OpenTofu", "Docker", "PostgreSQL", "Redis"],
+    arquitetura: ["Clean", "Hexagonal", "CQRS", "Event-Driven", "DDD", "TDD"],
+    certificacao: "AWS Certified Cloud Practitioner (2023)",
+    estudando: "AWS Solutions Architect Associate",
+    contato: LINKS
+  };
+
+  /* ---------- easter egg do console ---------- */
+  var big = "color:#F2B441;font:600 15px 'IBM Plex Mono',monospace";
+  var lbl = "color:#4FB8AD;font:500 12px 'IBM Plex Mono',monospace";
+  var txt = "color:#7B8B99;font:12px 'IBM Plex Mono',monospace";
+
+  console.log("%c  ____       _                    \n |  _ \\ ___ | |__  ___  ___  _ __  \n | |_) / _ \\| '_ \\/ __|/ _ \\| '_ \\ \n |  _ < (_) | |_) \\__ \\ (_) | | | |\n |_| \\_\\___/|_.__/|___/\\___/|_| |_|", big);
+  console.log("%cBackend & DevOps Engineer · Node.js · AWS · IaC", lbl);
+  console.log("%cQuase 5 anos escrevendo APIs em Node.js/TypeScript e levando tudo até produção\nna AWS: serverless, infraestrutura como código e pipelines CI/CD.\nAWS Certified Cloud Practitioner. Estudando o Solutions Architect Associate.", txt);
+  console.log("%cemail    %c" + LINKS.email, lbl, txt);
+  console.log("%clinkedin %c" + LINKS.linkedin, lbl, txt);
+  console.log("%cgithub   %c" + LINKS.github, lbl, txt);
+  console.log("%cDica: rode  hire()  para abrir um e-mail já preenchido, ou inspecione  robson  para ver o objeto completo.", "color:#9B8CF0;font:12px 'IBM Plex Mono',monospace");
+
+  window.robson = ME;
+  window.hire = function () {
+    var s = encodeURIComponent("Vamos conversar?");
+    var b = encodeURIComponent("Oi Robson,\n\nVi seu site e queria falar sobre uma oportunidade.\n\n");
+    window.location.href = "mailto:" + LINKS.email + "?subject=" + s + "&body=" + b;
+    return "Abrindo seu cliente de e-mail…";
+  };
+
+  /* ---------- utilidades ---------- */
+  var toast = document.getElementById("toast"), toastTimer;
+  function say(msg) {
+    toast.textContent = msg; toast.classList.add("on");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove("on"); }, 2200);
+  }
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  (function uptime() {
+    var start = new Date(2021, 11, 1);
+    var now = new Date();
+    var m = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+    document.getElementById("uptime").textContent = Math.floor(m / 12) + "a " + (m % 12) + "m";
+  })();
+
+  var CURL = "curl -s https://github.com/RobsonCrLira | grep -i backend";
+  document.getElementById("copyCurl").addEventListener("click", function () {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(CURL).then(function () { say("copiado: " + CURL); },
+        function () { say(CURL); });
+    } else { say(CURL); }
+  });
+
+  /* ---------- terminal ---------- */
+  var out = document.getElementById("out");
+  var input = document.getElementById("cmd");
+  var form = document.getElementById("form");
+  var history = [], hIdx = -1;
+
+  function line(html, cls) {
+    var p = document.createElement("p");
+    p.className = "ln " + (cls || "out");
+    p.innerHTML = html;
+    out.appendChild(p);
+    out.scrollTop = out.scrollHeight;
+  }
+  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+  function json(obj) {
+    var s = JSON.stringify(obj, null, 2);
+    return esc(s)
+      .replace(/&quot;/g, '"')
+      .replace(/"([^"]+)":/g, '<span class="key">"$1"</span>:')
+      .replace(/: "([^"]*)"/g, ': <span class="str">"$1"</span>')
+      .replace(/: (\d+)/g, ': <span class="num">$1</span>');
+  }
+
+  var COMMANDS = {
+    help: function () {
+      line("comandos disponíveis:");
+      line("  <span class='str'>whoami</span>     quem eu sou (JSON)");
+      line("  <span class='str'>stack</span>      tecnologias por área");
+      line("  <span class='str'>exp</span>        histórico profissional");
+      line("  <span class='str'>cert</span>       certificações e estudos");
+      line("  <span class='str'>contact</span>    e-mail, LinkedIn, GitHub");
+      line("  <span class='str'>ping</span>       testa se eu respondo");
+      line("  <span class='str'>hire</span>       abre um e-mail pra mim");
+      line("  <span class='str'>clear</span>      limpa a tela");
+    },
+    whoami: function () { line(json(ME)); },
+    stack: function () {
+      line("<span class='key'>backend</span>      Node.js · TypeScript · Express · Prisma · Sequelize · Python");
+      line("<span class='key'>aws</span>          Lambda · API Gateway · SQS · S3 · DynamoDB · RDS · CloudFormation · SAM");
+      line("<span class='key'>devops/iac</span>   OpenTofu · Terraform · GitHub Actions · Jenkins · Docker · Linux · Cloudflare");
+      line("<span class='key'>dados</span>        PostgreSQL · MySQL · MongoDB · DynamoDB · Redis");
+      line("<span class='key'>arquitetura</span>  Clean · Hexagonal · CQRS · Event-Driven · DDD · TDD");
+    },
+    exp: function () {
+      line("<span class='num'>2021-12 → agora</span>   Backend &amp; DevOps Engineer · Wejam Digital");
+      line("<span class='num'>2021-09 → 2021-12</span> Desenvolvedor Backend (freelancer) · Sunize Digital");
+      line("<span class='num'>2013    → 2021</span>    Administrativo, fiscal e DP — antes do código");
+      line("detalhes em <a href='#exp'>/experiencia</a>");
+    },
+    cert: function () {
+      line("AWS Certified Cloud Practitioner · 2023 → <a href='" + LINKS.credly + "'>credly</a>");
+      line("em andamento: AWS Solutions Architect Associate");
+    },
+    contact: function () {
+      line("email     <a href='mailto:" + LINKS.email + "'>" + LINKS.email + "</a>");
+      line("linkedin  <a href='" + LINKS.linkedin + "'>/in/robson-crlira</a>");
+      line("github    <a href='" + LINKS.github + "'>/RobsonCrLira</a>");
+    },
+    ping: function () {
+      var ms = (Math.random() * 18 + 6).toFixed(1);
+      line("PING robson (sa-east-1): 56 data bytes");
+      line("64 bytes from robson: icmp_seq=0 time=" + ms + " ms");
+      line("<span class='num'>1 packets transmitted, 1 received, 0% packet loss</span>");
+    },
+    hire: function () { line("abrindo seu cliente de e-mail…"); window.hire(); },
+    clear: function () { out.innerHTML = ""; },
+    sudo: function () { line("Robson não está no arquivo sudoers. Este incidente será reportado.", "err"); },
+    ls: function () { line("capabilities/  stack/  experiencia/  credenciais/  contato/"); },
+    "cat readme.md": function () { COMMANDS.whoami(); }
+  };
+
+  function run(raw) {
+    var cmd = raw.trim().toLowerCase();
+    if (!cmd) return;
+    line("<span class='ps1'>$</span> <span class='cmd'>" + esc(raw) + "</span>", "");
+    var fn = COMMANDS[cmd] || COMMANDS[cmd.split(" ")[0]];
+    if (fn) fn();
+    else line("comando não encontrado: " + esc(cmd) + " — tente <span class='str'>help</span>", "err");
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var v = input.value;
+    if (v.trim()) { history.push(v); hIdx = history.length; }
+    run(v);
+    input.value = "";
+  });
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowUp" && hIdx > 0) { hIdx--; input.value = history[hIdx]; e.preventDefault(); }
+    else if (e.key === "ArrowDown") {
+      if (hIdx < history.length - 1) { hIdx++; input.value = history[hIdx]; }
+      else { hIdx = history.length; input.value = ""; }
+      e.preventDefault();
+    }
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== input) { e.preventDefault(); input.focus(); }
+  });
+
+  /* estado inicial: já mostra algo útil */
+  run("whoami");
+  line("");
+  line("digite <span class='str'>help</span> para ver todos os comandos.");
+})();
+</script>
+</body>
+</html>

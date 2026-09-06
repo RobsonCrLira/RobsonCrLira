@@ -9,7 +9,7 @@ Construo APIs e sistemas robustos e cuido do ciclo completo até produção — 
 
 ### 🛠 Stack
 
-- **Backend:** Node.js · TypeScript · Laravel/PHP · Python
+- **Backend:** Node.js · TypeScript · Python
 - **DevOps:** AWS · Cloudflare · Linux · CI/CD (GitHub Actions · CloudFormation)
 - **Arquitetura:** Clean · Hexagonal · CQRS · Event-Driven
 - **Dados:** PostgreSQL · MySQL · MongoDB · DynamoDB · Redis
@@ -36,7 +36,6 @@ Construo APIs e sistemas robustos e cuido do ciclo completo até produção — 
 <code><img title="Node.js" width="26px" src="https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png"></code>
 <code><img title="TypeScript" width="26px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" /></code>
 <code><img title="JavaScript" width="26px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" /></code>
-<code><img title="PHP / Laravel" width="26px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/laravel/laravel-original.svg" /></code>
 <code><img title="Python" width="26px" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" /></code>
 
 ---
