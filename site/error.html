@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>404 &mdash; Robson Lira</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230B1015'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='16' fill='%23F2B441' text-anchor='middle'%3E%26gt;_%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#0B1015; --panel:#111A21; --line:#1E2B35;
+    --text:#DCE5EC; --muted:#7B8B99; --dim:#4E5F6C;
+    --accent:#F2B441; --teal:#4FB8AD;
+    --radius:6px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; min-height:100vh; background:var(--bg); color:var(--text);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;
+    display:flex; align-items:center; justify-content:center; padding:24px;
+  }
+  .card{
+    width:100%; max-width:560px; background:var(--panel);
+    border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;
+  }
+  .bar{
+    display:flex; align-items:center; gap:8px;
+    padding:10px 14px; border-bottom:1px solid var(--line);
+    font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--dim);
+  }
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--line)}
+  .dot.on{background:var(--accent)}
+  .body{padding:24px;font-family:"IBM Plex Mono",monospace;font-size:13.5px;line-height:1.85}
+  .code{font-size:40px;font-weight:600;color:var(--accent);line-height:1.1;margin:0 0 4px}
+  h1{font-size:17px;font-weight:600;margin:0 0 14px;font-family:"IBM Plex Sans",system-ui,sans-serif}
+  p{margin:0 0 20px;color:var(--muted)}
+  .prompt{color:var(--dim)}
+  a.back{
+    display:inline-block;text-decoration:none;color:var(--bg);background:var(--accent);
+    padding:9px 16px;border-radius:var(--radius);font-weight:600;font-size:13px;
+  }
+  a.back:hover{background:#ffc95e}
+  .hint{margin-top:18px;font-size:12px;color:var(--dim)}
+  .hint a{color:var(--teal)}
+</style>
+</head>
+<body>
+  <main class="card">
+    <div class="bar"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span>robsonlira.dev</span></div>
+    <div class="body">
+      <p class="prompt">&gt;_ cd <span style="color:var(--text)">pagina-solicitada</span></p>
+      <p class="code">404</p>
+      <h1>Esta pagina nao existe.</h1>
+      <p>O endereco pode estar errado ou o conteudo saiu do ar. Volte para a pagina inicial para continuar navegando.</p>
+      <a class="back" href="/">&larr; Voltar para o inicio</a>
+      <p class="hint">Se voce chegou aqui por um link meu, me avise em <a href="mailto:robson.crlira@gmail.com">robson.crlira@gmail.com</a>.</p>
+    </div>
+  </main>
+</body>
+</html>
